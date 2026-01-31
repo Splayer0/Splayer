@@ -5,89 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Splayer's</title>
-    <style>
-        body {
-            background-color: #121212;
-            color: #d4b06c;
-            font-family: 'Courier New', Courier, monospace;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            min-height: 100vh;
-            margin: 0;
-            padding: 50px 0;
-        }
-        
-        h1 {
-            font-size: 2rem;
-            letter-spacing: 2px;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-        }
-        
-        .links {
-            margin-top: 20px;
-        }
-        
-        a {
-            color: #b59a5b;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-        
-        a:hover {
-            color: #f1d592;
-            text-decoration: underline;
-        }
-        
-        .site-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: #d4b06c;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: transform 0.2s, color 0.2s;
-        }
-        
-        .site-link img {
-            width: 20px;
-            height: 20px;
-            filter: invert(82%) sepia(21%) saturate(833%) hue-rotate(351deg) brightness(89%) contrast(85%);
-        }
-        
-        .site-link:hover {
-            color: #f1d592;
-            transform: translateX(5px);
-        }
-    </style>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <h1>Splayer Singh</h1>
-    <div class="links" style="display: flex; flex-direction: column; gap: 12px; margin-top: 30px; align-items: flex-start;">
-        <a href="https://reddit.com/u/splayer_28410" target="_blank" class="site-link">
-            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/reddit.svg" alt="Reddit"> Reddit
-        </a>
-        <a href="https://bsky.app/profile/splayer1.bsky.social" target="_blank" class="site-link">
-            <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/bluesky.svg" alt="Bluesky"> Bluesky
-        </a>
-        <a href="https://x.com/Splayer_1" target="_blank" class="site-link">
-            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/x.svg" alt="X"> X/Twitter
-        </a>
-        <a href="https://discord.com/users/799248479586615316" target="_blank" class="site-link">
-            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/discord.svg" alt="Discord"> Discord
-        </a>
-        <a href="https://github.com/Splayer0" target="_blank" class="site-link">
-            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg" alt="GitHub"> Github
-        </a>
-        <a href="https://t.me/Splayer0" target="_blank" class="site-link">
-            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/telegram.svg" alt="Telegram"> Telegram
-        </a>
-    </div>
 
     <div id="profile" style="margin-top: 50px; text-align: center; opacity: 0; transition: opacity 0.5s;">
         <div style="position: relative; display: inline-block; margin-bottom: 15px;">
@@ -131,72 +54,29 @@
         </div>
     </div>
 
-    <script>
-        const DISCORD_ID = "799248479586615316";
+    <script src="script.js"></script>
+    <script data-goatcounter="https://splayer.goatcounter.com/count"async src="//gc.zgo.at/count.js"></script>
 
-        async function fetchDiscord() {
-            try {
-                const response = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`);
-                const {
-                    data
-                } = await response.json();
-
-                document.getElementById('username').textContent = `@${data.discord_user.username}`;
-                document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/${DISCORD_ID}/${data.discord_user.avatar}.png`;
-
-                const colors = {
-                    online: '#43b581',
-                    idle: '#faa61a',
-                    dnd: '#f04747',
-                    offline: '#747f8d'
-                };
-                document.getElementById('status-dot').style.backgroundColor = colors[data.discord_status] || colors.offline;
-
-                const custom = data.activities.find(a => a.type === 4);
-                document.getElementById('custom-status').textContent = custom ? custom.state : "";
-
-                if (data.listening_to_spotify) {
-                    document.getElementById('spotify').style.display = 'block';
-                    document.getElementById('track-name').textContent = `${data.spotify.song} by ${data.spotify.artist}`;
-                } else {
-                    document.getElementById('spotify').style.display = 'none';
-                }
-
-                const activity = data.activities.find(a => a.type === 0);
-                if (activity) {
-                    document.getElementById('activity').style.display = 'block';
-                    document.getElementById('activity-detail').textContent = `${activity.name} ${activity.details ? '- ' + activity.details : ''}`;
-                } else {
-                    document.getElementById('activity').style.display = 'none';
-                }
-
-                const isDoingSomething = data.listening_to_spotify || activity;
-                document.getElementById('chilling').style.display = isDoingSomething ? 'none' : 'block';
-
-                document.getElementById('profile').style.opacity = "1";
-            } catch (err) {
-                console.error("Lanyard error:", err);
-            }
-        }
-
-        fetchDiscord();
-        setInterval(fetchDiscord, 30000);
-        
-        function copyDiscord() {
-            const username = document.getElementById('username').textContent.replace('@', '');
-            
-            navigator.clipboard.writeText(username).then(() => {
-                const hint = document.getElementById('copy-hint');
-                hint.style.opacity = "1";
-                
-                setTimeout(() => {
-                    hint.style.opacity = "0";
-                }, 2000);
-            });
-        }
-    </script>
-    <script        data-goatcounter="https://splayer.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
+    <div class="links" style="display: flex; flex-direction: column; gap: 12px; margin-top: 30px; align-items: flex-start;">
+            <a href="https://reddit.com/u/splayer_28410" target="_blank" class="site-link">
+                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/reddit.svg" alt="Reddit"> Reddit
+            </a>
+            <a href="https://bsky.app/profile/splayer1.bsky.social" target="_blank" class="site-link">
+                <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/bluesky.svg" alt="Bluesky"> Bluesky
+            </a>
+            <a href="https://x.com/Splayer_1" target="_blank" class="site-link">
+                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/x.svg" alt="X"> X/Twitter
+            </a>
+            <a href="https://discord.com/users/799248479586615316" target="_blank" class="site-link">
+                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/discord.svg" alt="Discord"> Discord
+            </a>
+            <a href="https://github.com/Splayer0" target="_blank" class="site-link">
+                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg" alt="GitHub"> Github
+            </a>
+            <a href="https://t.me/Splayer0" target="_blank" class="site-link">
+                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/telegram.svg" alt="Telegram"> Telegram
+            </a>
+    </div>
 
 <footer style="margin-top: 50px; color: #d4b06c44; font-size: 0.7rem; letter-spacing: 1px;">
     ∆ 2026 // BUILT WITH ❤️ ∆
