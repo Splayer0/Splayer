@@ -95,7 +95,11 @@
             <div id="status-dot" style="position: absolute; bottom: 8px; right: 8px; width: 18px; height: 18px; border-radius: 50%; border: 3px solid #121212; background-color: #747f8d;"></div>
         </div>
         <div style="border: 1px solid #d4b06c33; border-radius: 15px; padding: 20px; background-color: #1a1a1a; max-width: 300px; margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
-            <div id="username" style="font-size: 1.3rem; font-weight: bold; color: #d4b06c;">loading...</div>
+            <div id="username" onclick="copyDiscord()" title="Click to copy username" style="font-size: 1.3rem; font-weight: bold; color: #d4b06c; cursor: pointer; transition: opacity 0.2s;">
+                loading...
+            </div>
+            <div id="copy-hint" style="font-size: 0.7rem; color: #43b581; opacity: 0; transition: opacity 0.3s;">Copied to clipboard!</div>
+
             <div id="custom-status" style="font-style: italic; color: #b59a5b; margin-top: 5px; font-size: 0.85rem; min-height: 1em;"></div>
             <hr style="border: 0; border-top: 1px solid #333; margin: 15px 0;">
             <div id="activity" style="font-size: 0.85rem; margin-bottom: 10px; display: none;">
@@ -177,6 +181,19 @@
 
         fetchDiscord();
         setInterval(fetchDiscord, 30000);
+        
+        function copyDiscord() {
+            const username = document.getElementById('username').textContent.replace('@', '');
+            
+            navigator.clipboard.writeText(username).then(() => {
+                const hint = document.getElementById('copy-hint');
+                hint.style.opacity = "1";
+                
+                setTimeout(() => {
+                    hint.style.opacity = "0";
+                }, 2000);
+            });
+        }
     </script>
     <script        data-goatcounter="https://splayer.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
