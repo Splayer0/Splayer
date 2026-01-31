@@ -11,6 +11,10 @@ body {
             padding: 50px 0;
         }
         
+        * {
+            box-sizing: border-box;
+        }
+
         h1 {
             font-size: 2rem;
             letter-spacing: 2px;
@@ -18,8 +22,31 @@ body {
             padding-bottom: 10px;
         }
         
+        .container {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 20px;
+            margin: 20px 0;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
         .links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
             margin-top: 20px;
+        }
+        
+        .links a {
+            color: #b59a5b;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+            margin: 0;
         }
         
         a {
